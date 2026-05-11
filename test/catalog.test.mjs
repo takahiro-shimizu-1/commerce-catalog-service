@@ -7,6 +7,7 @@ test('catalog exposes stock status for cart and checkout', () => {
   assert.deepEqual(getProductForCart('sku-1'), {
     id: 'sku-1',
     name: 'Notebook',
+    category: 'stationery',
     priceCents: 1200,
     available: true,
     stockStatus: 'in-stock',
