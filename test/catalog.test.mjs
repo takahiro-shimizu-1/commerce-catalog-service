@@ -2,7 +2,13 @@ import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import { CATALOG_PRODUCT_CONTRACT, getProductForCart } from '../src/catalog.mjs';
 
-test('catalog provides a cart-safe product contract', () => {
+test('catalog exposes stock status for cart and checkout', () => {
   assert.equal(CATALOG_PRODUCT_CONTRACT, 'catalog-product-v1');
-  assert.deepEqual(getProductForCart('sku-1'), { id: 'sku-1', name: 'Notebook', priceCents: 1200, available: true });
+  assert.deepEqual(getProductForCart('sku-1'), {
+    id: 'sku-1',
+    name: 'Notebook',
+    priceCents: 1200,
+    available: true,
+    stockStatus: 'in-stock',
+  });
 });
