@@ -3,21 +3,21 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 replaceOnce(
   'src/catalog.mjs',
-  "    category: 'stationery',\n    priceCents: 1200,",
-  "    category: 'stationery',\n    taxClass: 'standard',\n    priceCents: 1200,",
+  "    stockStatus: 'in-stock',\n  };",
+  "    stockStatus: 'in-stock',\n    fulfillmentChannel: 'warehouse',\n  };",
 );
 replaceOnce(
   'src/catalog.mjs',
-  "  if (product.category !== 'stationery') throw new Error('missing product category');\n",
-  "  if (product.category !== 'stationery') throw new Error('missing product category');\n  if (product.taxClass !== 'standard') throw new Error('missing product tax class');\n",
+  "  if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');\n",
+  "  if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');\n  if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');\n",
 );
 replaceOnce(
   'test/catalog.test.mjs',
-  "    category: 'stationery',\n    priceCents: 1200,",
-  "    category: 'stationery',\n    taxClass: 'standard',\n    priceCents: 1200,",
+  "    stockStatus: 'in-stock',\n  });",
+  "    stockStatus: 'in-stock',\n    fulfillmentChannel: 'warehouse',\n  });",
 );
 updateContracts((entry) => {
-  if (entry.id === 'CATALOG_PRODUCT_CONTRACT') entry.version = '4';
+  if (entry.id === 'CATALOG_PRODUCT_CONTRACT') entry.version = '5';
 });
 
 function updateContracts(mutator) {
