@@ -12,5 +12,6 @@ test('catalog exposes stock status for cart and checkout', () => {
     priceCents: 1200,
     available: true,
     stockStatus: 'in-stock',
+    fulfillmentChannel: 'warehouse',
   });
 });

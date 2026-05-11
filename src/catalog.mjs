@@ -9,6 +9,7 @@ export function getProductForCart(id) {
     priceCents: 1200,
     available: true,
     stockStatus: 'in-stock',
+    fulfillmentChannel: 'warehouse',
   };
 }
 
@@ -18,5 +19,8 @@ export function assertCatalogProduct(product) {
   if (product.category !== 'stationery') throw new Error('missing product category');
   if (product.taxClass !== 'standard') throw new Error('missing product tax class');
   if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');
+  if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');
+  if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');
+  if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');
   return true;
 }
