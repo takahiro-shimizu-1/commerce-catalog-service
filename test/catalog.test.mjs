@@ -8,6 +8,7 @@ test('catalog exposes stock status for cart and checkout', () => {
     id: 'sku-1',
     name: 'Notebook',
     category: 'stationery',
+    taxClass: 'standard',
     priceCents: 1200,
     available: true,
     stockStatus: 'in-stock',
