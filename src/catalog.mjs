@@ -4,6 +4,7 @@ export function getProductForCart(id) {
   return {
     id,
     name: 'Notebook',
+    category: 'stationery',
     priceCents: 1200,
     available: true,
     stockStatus: 'in-stock',
@@ -13,6 +14,7 @@ export function getProductForCart(id) {
 export function assertCatalogProduct(product) {
   if (!product || typeof product.id !== 'string') throw new Error('missing product id');
   if (!Number.isInteger(product.priceCents)) throw new Error('missing product price');
+  if (product.category !== 'stationery') throw new Error('missing product category');
   if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');
   return true;
 }
