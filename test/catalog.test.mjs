@@ -13,5 +13,6 @@ test('catalog exposes stock status for cart and checkout', () => {
     available: true,
     stockStatus: 'in-stock',
     fulfillmentChannel: 'warehouse',
+    fulfillmentRegion: 'JP',
   });
 });
