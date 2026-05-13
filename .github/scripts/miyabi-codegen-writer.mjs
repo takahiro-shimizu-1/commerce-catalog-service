@@ -1,24 +1,40 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from 'node:fs';
 
-replaceOnce(
-  'src/catalog.mjs',
-  "    stockStatus: 'in-stock',\n  };",
-  "    stockStatus: 'in-stock',\n    fulfillmentChannel: 'warehouse',\n  };",
-);
-replaceOnce(
-  'src/catalog.mjs',
-  "  if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');\n",
-  "  if (product.stockStatus !== 'in-stock') throw new Error('product is not in stock');\n  if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');\n",
-);
-replaceOnce(
-  'test/catalog.test.mjs',
-  "    stockStatus: 'in-stock',\n  });",
-  "    stockStatus: 'in-stock',\n    fulfillmentChannel: 'warehouse',\n  });",
-);
-updateContracts((entry) => {
-  if (entry.id === 'CATALOG_PRODUCT_CONTRACT') entry.version = '5';
-});
+const scenario = resolveScenario();
+
+if (scenario === 'large-catalog-product') {
+  applyLargeCatalogProductChange();
+} else {
+  throw new Error(`Unsupported catalog Miyabi scenario: ${scenario}`);
+}
+
+function resolveScenario() {
+  const text = [process.env.AUTOMATION_TASK_TITLE, process.env.AUTOMATION_TASK_ID].filter(Boolean).join(' ').toLowerCase();
+  if (text.includes('large-catalog-product')) return 'large-catalog-product';
+  return 'unknown';
+}
+
+function applyLargeCatalogProductChange() {
+  replaceOnce(
+    'src/catalog.mjs',
+    "    fulfillmentRegion: 'JP',\n  };",
+    "    fulfillmentRegion: 'JP',\n    lifecycleBadge: 'standard-flow',\n  };",
+  );
+  replaceOnce(
+    'src/catalog.mjs',
+    "  if (product.fulfillmentRegion !== 'JP') throw new Error('missing fulfillment region');\n",
+    "  if (product.fulfillmentRegion !== 'JP') throw new Error('missing fulfillment region');\n  if (product.lifecycleBadge !== 'standard-flow') throw new Error('missing lifecycle badge');\n",
+  );
+  replaceOnce(
+    'test/catalog.test.mjs',
+    "    fulfillmentRegion: 'JP',\n  });",
+    "    fulfillmentRegion: 'JP',\n    lifecycleBadge: 'standard-flow',\n  });",
+  );
+  updateContracts((entry) => {
+    if (entry.id === 'CATALOG_PRODUCT_CONTRACT') entry.version = '7';
+  });
+}
 
 function updateContracts(mutator) {
   const filePath = 'config/gitnexus-contracts.json';
