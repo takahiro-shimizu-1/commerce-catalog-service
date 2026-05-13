@@ -14,5 +14,6 @@ test('catalog exposes stock status for cart and checkout', () => {
     stockStatus: 'in-stock',
     fulfillmentChannel: 'warehouse',
     fulfillmentRegion: 'JP',
+    lifecycleBadge: 'standard-flow',
   });
 });
