@@ -12,6 +12,7 @@ export function getProductForCart(id) {
     fulfillmentChannel: 'warehouse',
     fulfillmentRegion: 'JP',
     lifecycleBadge: 'standard-flow',
+    qualitySignal: 'catalog-reviewed',
   };
 }
 
@@ -24,5 +25,6 @@ export function assertCatalogProduct(product) {
   if (product.fulfillmentChannel !== 'warehouse') throw new Error('missing fulfillment channel');
   if (product.fulfillmentRegion !== 'JP') throw new Error('missing fulfillment region');
   if (product.lifecycleBadge !== 'standard-flow') throw new Error('missing lifecycle badge');
+  if (product.qualitySignal !== 'catalog-reviewed') throw new Error('missing quality signal');
   return true;
 }
